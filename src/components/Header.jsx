@@ -60,7 +60,7 @@ const Header = () => {
             <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
               <Link to="/simulacao">Simular Orçamento</Link>
             </Button>
-            <Button asChild className="clyon-button">
+            <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
               <Link to="/orcamentos">Pedir Orçamento</Link>
             </Button>
           </div>
