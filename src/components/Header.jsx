@@ -35,7 +35,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src={Logo} alt="CLYON" className="h-12 w-auto" />
+            <img src={clyonLogo} alt="CLYON" className="h-12 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
