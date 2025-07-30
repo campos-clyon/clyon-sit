@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
-import clyonLogo from '../assets/clyon-logo.png'
+import clyonLogo from '../assets/logo.png'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -35,7 +35,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src={clyonLogo} alt="CLYON" className="h-12 w-auto" />
+            <img src={Logo} alt="CLYON" className="h-12 w-auto" />
           </Link>
 
           {/* Desktop Navigation */}
