@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Phone, Mail, MessageCircle, MapPin, Clock, Facebook, Instagram } from 'lucide-react'
-import clyonLogo from '../assets/clyon-logo.png'
+import clyonLogo from '../assets/logo.png'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
