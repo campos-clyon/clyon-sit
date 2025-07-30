@@ -142,7 +142,12 @@ const Home = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white">
+              <Button 
+  size="lg" 
+  variant="outline" 
+  className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
+  asChild
+>
                 <Link to="/simulacao">Simular Orçamento</Link>
               </Button>
             </div>
