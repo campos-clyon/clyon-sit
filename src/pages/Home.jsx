@@ -221,12 +221,13 @@ const Home = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {vantagens.map((vantagem, index) => (
-              <div key={index} className="text-center">
-                <div className="mb-4">{vantagem.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{vantagem.title}</h3>
-                <p className="text-gray-600">{vantagem.description}</p>
-              </div>
-            ))}
+  <div key={index} className="flex flex-col items-center text-center">
+    <div className="mb-4">{vantagem.icon}</div>
+    <h3 className="text-xl font-semibold mb-2">{vantagem.title}</h3>
+    <p className="text-gray-600">{vantagem.description}</p>
+  </div>
+))}
+
           </div>
         </div>
       </section>
