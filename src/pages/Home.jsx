@@ -142,23 +142,16 @@ const Home = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-4">
-                <Link to="/orcamentos">
-                  Pedir Orçamento Grátis
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
               <Button 
-  size="lg" 
-  variant="outline" 
-  className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
-  asChild
->
+                size="lg" 
+                variant="outline" 
+                className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
+                asChild
+              >
                 <Link to="/simulacao">Simular Orçamento</Link>
               </Button>
             </div>
-            
+
             {/* Quick Contact */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 text-sm">
               <a 
@@ -228,13 +221,12 @@ const Home = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {vantagens.map((vantagem, index) => (
-  <div key={index} className="flex flex-col items-center text-center">
-    <div className="mb-4">{vantagem.icon}</div>
-    <h3 className="text-xl font-semibold mb-2">{vantagem.title}</h3>
-    <p className="text-gray-600">{vantagem.description}</p>
-  </div>
-))}
-
+              <div key={index} className="flex flex-col items-center text-center">
+                <div className="mb-4">{vantagem.icon}</div>
+                <h3 className="text-xl font-semibold mb-2">{vantagem.title}</h3>
+                <p className="text-gray-600">{vantagem.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -331,41 +323,39 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-  size="lg" 
-  variant="outline" 
-  className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
-  asChild
->
-  <Link to="/orcamentos" style={{ color: '#07a0bc' }}>
-    Pedir Orçamento
-  </Link>
-</Button>
+              size="lg" 
+              variant="outline" 
+              className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
+              asChild
+            >
+              <Link to="/orcamentos" style={{ color: '#07a0bc' }}>
+                Pedir Orçamento
+              </Link>
+            </Button>
 
-<Button 
-  size="lg" 
-  variant="outline" 
-  className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
-  asChild
->
-  <Link to="/contato" style={{ color: '#07a0bc' }}>
-    <Phone className="mr-2 h-5 w-5" />
-    Ligar Agora
-  </Link>
-</Button>
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
+              asChild
+            >
+              <Link to="/contato" style={{ color: '#07a0bc' }}>
+                <Phone className="mr-2 h-5 w-5" />
+                Ligar Agora
+              </Link>
+            </Button>
 
-<Button 
-  size="lg" 
-  variant="outline" 
-  className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
-  asChild
->
-  <a href="https://wa.me/351931632622" target="_blank" rel="noopener noreferrer" style={{ color: '#07a0bc' }}>
-    <MessageCircle className="mr-2 h-5 w-5" />
-    WhatsApp
-  </a>
-</Button>
-
-
+            <Button 
+              size="lg" 
+              variant="outline" 
+              className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]" 
+              asChild
+            >
+              <a href="https://wa.me/351931632622" target="_blank" rel="noopener noreferrer" style={{ color: '#07a0bc' }}>
+                <MessageCircle className="mr-2 h-5 w-5" />
+                WhatsApp
+              </a>
+            </Button>
           </div>
         </div>
       </section>
@@ -374,4 +364,3 @@ const Home = () => {
 }
 
 export default Home
-
