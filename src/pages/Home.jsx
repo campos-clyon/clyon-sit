@@ -147,7 +147,7 @@ const Home = () => {
             </div>
 
             {/* Quick Contact */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 text-sm">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 text-sm bg-white bg-opacity-80 rounded-lg shadow-md p-4">
               <a
                 href="tel:+351931632622"
                 className="flex items-center justify-center space-x-2 hover:opacity-80 transition-opacity"
