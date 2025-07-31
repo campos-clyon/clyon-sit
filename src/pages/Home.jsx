@@ -333,31 +333,44 @@ const Home = () => {
             Fale conosco e receba um orçamento gratuito
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
-              <Link to="/orcamentos" style={{ color: '#07a0bc' }}>
-                Pedir Orçamento
-              </Link>
-            </Button>
+  <Button
+    size="lg"
+    variant="outline"
+    className="border-white text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    asChild
+  >
+    <Link to="/orcamentos">Pedir Orçamento</Link>
+  </Button>
 
-            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
-              <Link to="/contato" style={{ color: '#07a0bc' }}>
-                <Phone className="mr-2 h-5 w-5" />
-                Ligar Agora
-              </Link>
-            </Button>
+  <Button
+    size="lg"
+    variant="outline"
+    className="border-white text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    asChild
+  >
+    <Link to="/contato">
+      <Phone className="mr-2 h-5 w-5" />
+      Ligar Agora
+    </Link>
+  </Button>
 
-            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
-              <a
-                href="https://wa.me/351931632622"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: '#07a0bc' }}
-              >
-                <MessageCircle className="mr-2 h-5 w-5" />
-                WhatsApp
-              </a>
-            </Button>
-          </div>
+  <Button
+    size="lg"
+    variant="outline"
+    className="border-white text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    asChild
+  >
+    <a
+      href="https://wa.me/351931632622"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <MessageCircle className="mr-2 h-5 w-5" />
+      WhatsApp
+    </a>
+  </Button>
+</div>
+
         </div>
       </section>
     </div>
