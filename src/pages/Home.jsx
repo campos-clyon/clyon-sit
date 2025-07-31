@@ -150,7 +150,7 @@ const Home = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 text-sm">
   <a
     href="tel:+351931632622"
-    className="flex items-center justify-center gap-2 px-4 py-2 text-[#000000] font-medium border border-[#38b6ff] rounded-full hover:bg-[#ffffff] hover:text-white transition"
+    className="flex items-center justify-center gap-2 px-4 py-2 text-[#000000] font-medium border border-[#38b6ff] rounded-full hover:bg-[#0cc0df] hover:text-white transition"
   >
     <Phone className="h-4 w-4" />
     <span>+351 931632622</span>
@@ -159,7 +159,7 @@ const Home = () => {
     href="https://wa.me/351931632622"
     target="_blank"
     rel="noopener noreferrer"
-    className="flex items-center justify-center gap-2 px-4 py-2 text-[#000000] font-medium border border-[#38b6ff] rounded-full hover:bg-[#ffffff] hover:text-white transition"
+    className="flex items-center justify-center gap-2 px-4 py-2 text-[#000000] font-medium border border-[#38b6ff] rounded-full hover:bg-[#0cc0df] hover:text-white transition"
   >
     <MessageCircle className="h-4 w-4" />
     <span>WhatsApp</span>
