@@ -110,7 +110,7 @@ const Footer = () => {
           {/* Areas & Hours */}
           <div className="space-y-4 mb-5">
             <h3 className="text-lg font-semibold">Área de Atuação</h3>
-            <div className="flex items-start space-x-2">
+            <div className="flex items-start space-x-2 my-5">
               <MapPin className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
               <div className="text-gray-300 text-sm">
                 <p className="font-medium mb-2">Grande Lisboa e Setúbal</p>
