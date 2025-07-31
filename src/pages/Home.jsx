@@ -136,35 +136,44 @@ const Home = () => {
               Atuação em Lisboa e Setúbal com compromisso ambiental e foco na segurança
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-4">
-                <Link to="/orcamentos"> Pedir Orçamento Grátis <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="secondary" asChild className="text-lg px-8 py-4">
-                <Link to="/simulacao">Simular Orçamento <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
+  <Button
+    size="lg"
+    variant="outline"
+    className="border-[#ffffff] text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    asChild
+  >
+    <Link to="/orcamentos">Pedir Orçamento</Link>
+  </Button>
 
-            {/* Quick Contact */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8 text-sm">
-  <a
-    href="tel:+351931632622"
-    className="flex items-center justify-center gap-2 px-4 py-2 text-[#ffffff] font-medium border border-[#38b6ff] rounded-full hover:bg-[#0cc0df] hover:text-white transition"
+  <Button
+    size="lg"
+    variant="outline"
+    className="border-[#ffffff] text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    asChild
   >
-    <Phone className="h-4 w-4" />
-    <span>+351 931632622</span>
-  </a>
-  <a
-    href="https://wa.me/351931632622"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="flex items-center justify-center gap-2 px-4 py-2 text-[#ffffff] font-medium border border-[#38b6ff] rounded-full hover:bg-[#0cc0df] hover:text-white transition"
+    <Link to="/contato">
+      <Phone className="mr-2 h-5 w-5" />
+      Ligar Agora
+    </Link>
+  </Button>
+
+  <Button
+    size="lg"
+    variant="outline"
+    className="border-[#ffffff] text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    asChild
   >
-    <MessageCircle className="h-4 w-4" />
-    <span>WhatsApp</span>
-  </a>
+    <a
+      href="https://wa.me/351931632622"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <MessageCircle className="mr-2 h-5 w-5" />
+      WhatsApp
+    </a>
+  </Button>
 </div>
+
 
           </div>
         </div>
