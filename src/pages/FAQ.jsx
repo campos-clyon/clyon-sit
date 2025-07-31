@@ -318,7 +318,7 @@ const FAQ = () => {
             <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/orcamentos">Pedir Orçamento Grátis</Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" asChild>
+            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/simulacao">Simular Orçamento</Link>
             </Button>
           </div>
