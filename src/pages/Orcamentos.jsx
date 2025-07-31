@@ -126,7 +126,7 @@ const Orcamentos = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="clyon-hero text-white py-16">
-        <div className="clyon-container text-center">
+        <div className="clyon-container text-center ">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Pedir Orçamento</h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto">
             Preencha o formulário e receba um orçamento gratuito e personalizado
@@ -164,7 +164,7 @@ const Orcamentos = () => {
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Dados Pessoais */}
-                    <div className="space-y-4">
+                    <div className="space-y-4 my-2">
                       <h3 className="text-lg font-semibold">Dados de Contacto</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
