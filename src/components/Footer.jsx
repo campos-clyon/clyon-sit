@@ -108,7 +108,7 @@ const Footer = () => {
           </div>
 
           {/* Areas & Hours */}
-          <div className="space-y-4">
+          <div className="space-y-4 mb-5">
             <h3 className="text-lg font-semibold">Área de Atuação</h3>
             <div className="flex items-start space-x-2">
               <MapPin className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
@@ -139,7 +139,7 @@ const Footer = () => {
 
       {/* Bottom Footer */}
       <div className="border-t border-gray-800">
-        <div className="clyon-container py-10 my-5">
+        <div className="clyon-container py-10">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-gray-400 text-sm">
               © {currentYear} CLYON. Todos os direitos reservados.
