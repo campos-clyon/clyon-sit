@@ -32,10 +32,10 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
-      <div className="clyon-container my-30 py-12">
+      <div className="clyon-container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="space-y-4">
+          <div className="space-y-40">
             <img src={clyonLogo} alt="CLYON" className="h-10 w-auto brightness-0 invert" />
             <p className="text-gray-300 text-sm">
               Recolha profissional de entulho e resíduos em Lisboa e Setúbal. 
