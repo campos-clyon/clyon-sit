@@ -397,7 +397,6 @@ const ComoFunciona = () => {
             <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/orcamentos">
                 Pedir Orçamento
-                <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
