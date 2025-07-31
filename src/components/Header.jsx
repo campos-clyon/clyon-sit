@@ -20,7 +20,7 @@ const Header = () => {
   const isActive = (path) => location.pathname === path
 
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50">
+    <header className="bg-white shadow-lg sticky top-0 z-50 text-black font-bold">
       {/* Top bar apenas com área de atuação */}
       <div className="clyon-primary py-2">
         <div className="clyon-container">
