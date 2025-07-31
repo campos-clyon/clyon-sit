@@ -273,10 +273,10 @@ const Servicos = () => {
             Entre em contacto connosco e receba um orçamento personalizado
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
+             <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/orcamentos">Pedir Orçamento</Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" asChild>
+             <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/simulacao">Simular Orçamento</Link>
             </Button>
           </div>
