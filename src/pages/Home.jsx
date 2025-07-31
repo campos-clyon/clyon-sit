@@ -301,7 +301,7 @@ const Home = () => {
           <p className="text-xl mb-8 opacity-90">
             Atuamos em toda a região da Grande Lisboa e Setúbal
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm">
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm text-black font-bold">
             {[
               'Lisboa', 'Cascais', 'Sintra', 'Oeiras', 'Amadora', 'Loures',
               'Setúbal', 'Almada', 'Barreiro', 'Seixal', 'Sesimbra', 'Palmela'
