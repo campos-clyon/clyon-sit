@@ -336,7 +336,7 @@ const Home = () => {
   <Button
     size="lg"
     variant="outline"
-    className="border-white text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    className="border-white text-gray font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
     asChild
   >
     <Link to="/orcamentos">Pedir Orçamento</Link>
@@ -345,7 +345,7 @@ const Home = () => {
   <Button
     size="lg"
     variant="outline"
-    className="border-white text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    className="border-white text-black font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
     asChild
   >
     <Link to="/contato">
@@ -357,7 +357,7 @@ const Home = () => {
   <Button
     size="lg"
     variant="outline"
-    className="border-white text-white font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    className="border-white text-blue font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
     asChild
   >
     <a
