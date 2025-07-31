@@ -86,8 +86,8 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    isActive(item.href) ? 'clyon-primary-text' : 'text-gray-700'
+                  className={`text-sm font-bold transition-colors hover:text-primary ${
+                  isActive(item.href) ? 'text-[#07a0bc]' : 'text-black'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
