@@ -30,7 +30,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-gray-900 text-white mt-5">
+    <footer className="bg-gray-900 text-white mt-1">
       {/* Main Footer Content */}
       <div className="clyon-container py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
