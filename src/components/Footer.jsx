@@ -146,7 +146,7 @@ const Footer = () => {
             </div>
             
             {/* Social Links */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 my-4">
               <span className="text-gray-400 text-sm">Siga-nos:</span>
               <a 
                 href="#" 
