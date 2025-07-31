@@ -358,7 +358,7 @@ const Contato = () => {
             Entre em contacto direto para serviços urgentes
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
+            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <a href="tel:+351931632622">
                 <Phone className="mr-2 h-5 w-5" />
                 Ligar Agora
