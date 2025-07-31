@@ -340,12 +340,7 @@ const Home = () => {
               </Link>
             </Button>
 
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]"
-              asChild
-            >
+            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/contato" style={{ color: '#07a0bc' }}>
                 <Phone className="mr-2 h-5 w-5" />
                 Ligar Agora
