@@ -364,7 +364,7 @@ const Contato = () => {
                 Ligar Agora
               </a>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" asChild>
+            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <a href="https://wa.me/351931632622" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 WhatsApp 24h
