@@ -164,7 +164,7 @@ const Orcamentos = () => {
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Dados Pessoais */}
-                    <div className="space-y-4 my-2">
+                    <div className="space-y-4 my-20">
                       <h3 className="text-lg font-semibold">Dados de Contacto</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
