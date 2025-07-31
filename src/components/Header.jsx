@@ -46,8 +46,8 @@ const Header = () => {
                 to={item.href}
                 className={`text-sm font-medium transition-colors hover:text-primary ${
                   isActive(item.href)
-                    ? 'clyon-primary-text border-b-2 border-primary'
-                    : 'text-gray-700'
+                    ? 'text-[#07a0bc] border-b-2 border-[#07a0bc]'
+                    : 'text-black'
                 }`}
               >
                 {item.name}
