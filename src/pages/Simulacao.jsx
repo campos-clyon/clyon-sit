@@ -417,7 +417,7 @@ Pode começar por me dizer que tipo de material precisa de recolher?`
             <Button size="lg" variant="secondary" asChild>
               <a href="/orcamentos">Orçamento Oficial</a>
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" asChild>
+            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <a href="/contato">Contactar-nos</a>
             </Button>
           </div>
