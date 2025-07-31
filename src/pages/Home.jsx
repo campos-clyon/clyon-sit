@@ -357,7 +357,7 @@ const Home = () => {
   <Button
     size="lg"
     variant="outline"
-    className="border-white text-light blue font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
+    className="border-white text-black font-bold hover:bg-white hover:text-[#07a0bc] transition-colors"
     asChild
   >
     <a
