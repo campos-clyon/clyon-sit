@@ -255,7 +255,7 @@ const Servicos = () => {
               'Lisboa', 'Cascais', 'Sintra', 'Oeiras', 'Amadora', 'Loures',
               'Setúbal', 'Almada', 'Barreiro', 'Seixal', 'Sesimbra', 'Palmela'
             ].map((cidade) => (
-              <div key={cidade} className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
+              <div key={cidade} className="bg-Black bg-opacity-24 rounded-lg p-4 text-center">
                 {cidade}
               </div>
             ))}
