@@ -241,21 +241,21 @@ const Servicos = () => {
       </section>
 
       {/* Áreas de Atuação */}
-      <section className="clyon-section clyon-primary">
-        <div className="clyon-container text-center text-white">
-          <div className="flex items-center justify-center mb-4">
-            <MapPin className="h-8 w-8 mr-3" />
-            <h2 className="text-3xl md:text-4xl font-bold">Área de Atuação</h2>
+      <section className="clyon-section clyon-primary text-white">
+        <div className="clyon-container">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Áreas de Atuação</h2>
+            <p className="text-xl opacity-90">
+              Atendemos toda a região da Grande Lisboa e Setúbal
+            </p>
           </div>
-          <p className="text-xl mb-8 opacity-90">
-            Atuamos em toda a região da Grande Lisboa e Setúbal
-          </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm">
+
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
               'Lisboa', 'Cascais', 'Sintra', 'Oeiras', 'Amadora', 'Loures',
               'Setúbal', 'Almada', 'Barreiro', 'Seixal', 'Sesimbra', 'Palmela'
             ].map((cidade) => (
-               <div key={cidade} className="bg-white bg-opacity-20 rounded-lg p-3 text-black">
+              <div key={cidade} className="bg-white bg-opacity-20 rounded-lg p-3 text-center">
                 {cidade}
               </div>
             ))}
@@ -273,10 +273,10 @@ const Servicos = () => {
             Entre em contacto connosco e receba um orçamento personalizado
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
+            <Button size="lg" variant="secondary" asChild>
               <Link to="/orcamentos">Pedir Orçamento</Link>
             </Button>
-            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
+            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/simulacao">Simular Orçamento</Link>
             </Button>
           </div>
