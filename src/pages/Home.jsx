@@ -329,12 +329,7 @@ const Home = () => {
             Fale conosco e receba um orçamento gratuito
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]"
-              asChild
-            >
+            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <Link to="/orcamentos" style={{ color: '#07a0bc' }}>
                 Pedir Orçamento
               </Link>
@@ -347,12 +342,7 @@ const Home = () => {
               </Link>
             </Button>
 
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white hover:bg-white hover:text-[#07a0bc] text-[#07a0bc] active:bg-white active:text-[#07a0bc]"
-              asChild
-            >
+            <Button size="lg" variant="outline" className="text-black border-white hover:bg-white hover:text-primary" asChild>
               <a
                 href="https://wa.me/351931632622"
                 target="_blank"
