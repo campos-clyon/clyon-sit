@@ -44,11 +44,11 @@ const Header = () => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isActive(item.href)
-                    ? 'text-[#07a0bc] border-b-2 border-[#07a0bc]'
-                    : 'text-black'
-                }`}
+                className={`text-sm font-bold transition-colors hover:text-primary ${
+                isActive(item.href)
+                ? 'text-[#07a0bc] border-b-2 border-[#07a0bc]'
+               : 'text-black'
+               }`}
               >
                 {item.name}
               </Link>
