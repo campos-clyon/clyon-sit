@@ -36,7 +36,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="space-y-4 my-5">
-            <img src={clyonLogo} alt="CLYON" className="h-10 w-auto brightness-0 invert" />
+            <img src={clyonLogo} alt="CLYON" className="h-12 w-auto brightness-0 invert" />
             <p className="text-gray-300 text-sm">
               Recolha profissional de entulho e resíduos em Lisboa e Setúbal. 
               Serviço rápido, seguro e sustentável.
