@@ -75,7 +75,7 @@ const Home = () => {
     {
       numero: '1',
       titulo: 'Contacto',
-      descricao: 'Entre em contacto connosco por telefone, e-mail ou formulário online.'
+      descricao: 'Entre em contacto conosco por telefone, e-mail ou formulário online.'
     },
     {
       numero: '2',
@@ -326,7 +326,7 @@ const Home = () => {
             Precisa de recolha de resíduos?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Fale connosco e receba um orçamento gratuito
+            Fale conosco e receba um orçamento gratuito
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
