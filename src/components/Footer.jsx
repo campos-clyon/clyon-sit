@@ -32,10 +32,10 @@ const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}
-      <div className="clyon-container py-12">
+      <div className="clyon-container py-12 my-5">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
-          <div className="space-y-4">
+          <div className="space-y-4 my-5">
             <img src={clyonLogo} alt="CLYON" className="h-10 w-auto brightness-0 invert" />
             <p className="text-gray-300 text-sm">
               Recolha profissional de entulho e resíduos em Lisboa e Setúbal. 
@@ -63,7 +63,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-4">
+          <div className="space-y-4 my-5">
             <h3 className="text-lg font-semibold">Links Rápidos</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
@@ -96,7 +96,7 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div className="space-y-4 mt-5">
+          <div className="space-y-4 my-5">
             <h3 className="text-lg font-semibold">Nossos Serviços</h3>
             <ul className="space-y-2">
               {services.map((service) => (
