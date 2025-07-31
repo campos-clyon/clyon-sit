@@ -250,12 +250,12 @@ const Servicos = () => {
           <p className="text-xl mb-8 opacity-90">
             Atuamos em toda a região da Grande Lisboa e Setúbal
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm">
+           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {[
               'Lisboa', 'Cascais', 'Sintra', 'Oeiras', 'Amadora', 'Loures',
               'Setúbal', 'Almada', 'Barreiro', 'Seixal', 'Sesimbra', 'Palmela'
             ].map((cidade) => (
-              <div key={cidade} className="bg-white bg-opacity-20 rounded-lg p-3 text-black">
+               <div key={cidade} className="bg-Black bg-opacity-24 rounded-lg p-4 text-center">
                 {cidade}
               </div>
             ))}
