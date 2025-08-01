@@ -168,8 +168,8 @@ const Orcamentos = () => {
                       <h3 className="text-lg font-semibold">Dados de Contacto</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="nome mb-2">Nome Completo *</Label>
-                          <Input id="nome" type="text" required value={formData.nome} onChange={(e) => handleInputChange('nome', e.target.value)} placeholder="Seu nome completo" />
+                          <Label htmlFor="nome">Nome Completo *</Label>
+                          <Input id="nome" type="text" required value={formData.nome} onChange={(e) => handleInputChange('nome', e.target.value)} placeholder="Seu nome completo mb-2" />
                         </div>
                         <div>
                           <Label htmlFor="telefone">Telefone *</Label>
