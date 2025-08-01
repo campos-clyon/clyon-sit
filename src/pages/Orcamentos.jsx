@@ -94,7 +94,7 @@ const Orcamentos = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <Card className="max-w-md mx-auto">
           <CardContent className="p-8 text-center">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-2" />
             <h2 className="text-2xl font-bold mb-4">Pedido Enviado!</h2>
             <p className="text-gray-600 mb-6">
               Recebemos o seu pedido de orçamento. Entraremos em contacto consigo
@@ -165,7 +165,7 @@ const Orcamentos = () => {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Dados Pessoais */}
                     <div className="space-y-4 my-2">
-                      <h3 className="text-lg font-semibold">Dados de Contacto</h3>
+                      <h3 className="text-lg font-semibold my-2">Dados de Contacto</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label htmlFor="nome">Nome Completo *</Label>
@@ -184,7 +184,7 @@ const Orcamentos = () => {
 
                     {/* Localização */}
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold mb-2">Localização do Serviço</h3>
+                      <h3 className="text-lg font-semibold my-2">Localização do Serviço</h3>
                       <div>
                         <Label htmlFor="morada">Morada Completa *</Label>
                         <Input id="morada" type="text" required value={formData.morada} onChange={(e) => handleInputChange('morada', e.target.value)} placeholder="Rua, número, andar, código postal" />
@@ -208,7 +208,7 @@ const Orcamentos = () => {
 
                     {/* Detalhes do Serviço */}
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold">Detalhes do Serviço</h3>
+                      <h3 className="text-lg font-semibold my-2">Detalhes do Serviço</h3>
                       <div>
                         <Label htmlFor="tipoResiduo">Tipo de Resíduo *</Label>
                         <Select onValueChange={(value) => handleInputChange('tipoResiduo', value)}>
@@ -240,7 +240,7 @@ const Orcamentos = () => {
 
                     {/* Opções Especiais */}
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold">Opções Especiais</h3>
+                      <h3 className="text-lg font-semibold my-2">Opções Especiais</h3>
                       <div className="space-y-3">
                         <div className="flex items-center space-x-2">
                           <Checkbox id="urgente" checked={formData.urgente} onCheckedChange={(checked) => handleInputChange('urgente', checked)} />
