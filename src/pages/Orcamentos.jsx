@@ -184,7 +184,7 @@ const Orcamentos = () => {
 
                     {/* Localização */}
                     <div className="space-y-4">
-                      <h3 className="text-lg font-semibold">Localização do Serviço</h3>
+                      <h3 className="text-lg font-semibold mb-2">Localização do Serviço</h3>
                       <div>
                         <Label htmlFor="morada">Morada Completa *</Label>
                         <Input id="morada" type="text" required value={formData.morada} onChange={(e) => handleInputChange('morada', e.target.value)} placeholder="Rua, número, andar, código postal" />
