@@ -271,7 +271,7 @@ const Orcamentos = () => {
     multiple
     onChange={(e) => handleInputChange('imagens', Array.from(e.target.files))}
   />
-  <p className="text-xs text-gray-500 mt-1">Você pode enviar várias fotos</p>
+  <p className="text-xs text-gray-500 mt-1">Você pode enviar até 3 fotos</p>
 </div>
 
                     </div>
