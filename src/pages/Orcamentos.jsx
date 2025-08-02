@@ -44,39 +44,47 @@ const Orcamentos = () => {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  e.preventDefault()
+  setIsSubmitting(true)
 
-    try {
-      const response = await fetch("https://formspree.io/f/xblkagae", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          nome: formData.nome,
-          email: formData.email,
-          telefone: formData.telefone,
-          morada: formData.morada,
-          cidade: formData.cidade,
-          tipoResiduo: formData.tipoResiduo,
-          descricao: formData.descricao,
-          urgente: formData.urgente ? "Sim" : "Não",
-          acessoDificil: formData.acessoDificil ? "Sim" : "Não",
-          termos: formData.termos ? "Aceitou" : "Não aceitou"
-        })
+  try {
+    const form = new FormData()
+
+    // Campos de texto
+    form.append('nome', formData.nome)
+    form.append('email', formData.email)
+    form.append('telefone', formData.telefone)
+    form.append('morada', formData.morada)
+    form.append('cidade', formData.cidade)
+    form.append('tipoResiduo', formData.tipoResiduo)
+    form.append('descricao', formData.descricao)
+    form.append('urgente', formData.urgente ? 'Sim' : 'Não')
+    form.append('acessoDificil', formData.acessoDificil ? 'Sim' : 'Não')
+    form.append('termos', formData.termos ? 'Aceitou' : 'Não aceitou')
+
+    // Arquivos (imagens)
+    if (formData.imagens && formData.imagens.length > 0) {
+      formData.imagens.forEach((file, index) => {
+        form.append('imagens', file)
       })
-
-      if (!response.ok) throw new Error("Erro ao enviar")
-
-      setSubmitted(true)
-    } catch (error) {
-      console.error("Erro ao enviar o formulário:", error)
-      alert("Ocorreu um erro ao enviar o formulário. Tente novamente.")
-    } finally {
-      setIsSubmitting(false)
     }
+
+    const response = await fetch('https://formspree.io/f/xblkagae', {
+      method: 'POST',
+      body: form
+    })
+
+    if (!response.ok) throw new Error('Erro ao enviar')
+
+    setSubmitted(true)
+  } catch (error) {
+    console.error('Erro ao enviar o formulário:', error)
+    alert('Erro ao enviar o formulário.')
+  } finally {
+    setIsSubmitting(false)
   }
+}
+
 
   const tiposResiduo = [
     "Entulho de construção",
