@@ -96,8 +96,6 @@ const Orcamentos = () => {
 }
 
 
-
-
   const tiposResiduo = [
     "Entulho de construção",
     "Móveis velhos",
