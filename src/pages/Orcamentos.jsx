@@ -18,7 +18,7 @@ const Orcamentos = () => {
     urgente: false,
     acessoDificil: false,
     termos: false,
-    imagens: []
+    imagem: null
   })
 
   const formRef = useRef(null)
@@ -33,12 +33,19 @@ const Orcamentos = () => {
     e.preventDefault()
     setIsSubmitting(true)
 
+    const form = new FormData(formRef.current)
+
+    // Anexa imagem com o nome correto para EmailJS (deve bater com {{file}} no template)
+    if (formData.imagem) {
+      form.append('file', formData.imagem)
+    }
+
     try {
       await emailjs.sendForm(
-        'service_u783k4t',       // ID do serviço
-        'template_a41pmvm',      // ID do template
-        formRef.current,         // Ref do formulário
-        'Fzcwt1Ax0RaIDF0QW'      // Chave pública
+        'service_u783k4t',
+        'template_a41pmvm',
+        form,
+        'Fzcwt1Ax0RaIDF0QW'
       )
       setSubmitted(true)
     } catch (error) {
@@ -89,13 +96,13 @@ const Orcamentos = () => {
         <Textarea id="descricao" name="descricao" value={formData.descricao} onChange={(e) => handleInputChange('descricao', e.target.value)} />
       </div>
       <div>
-        <Label htmlFor="imagens">Imagem (opcional)</Label>
+        <Label htmlFor="imagem">Imagem (opcional)</Label>
         <Input
-          id="imagens"
-          name="attachments" // Este campo precisa ser "attachments" no template do EmailJS
+          id="imagem"
+          name="file" // este campo precisa bater com {{file}} no template
           type="file"
           accept="image/*"
-          onChange={(e) => handleInputChange('imagens', Array.from(e.target.files))}
+          onChange={(e) => handleInputChange('imagem', e.target.files[0])}
         />
       </div>
       <div className="flex items-center gap-2">
