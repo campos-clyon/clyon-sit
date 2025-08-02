@@ -17,17 +17,19 @@ import {
 
 const Orcamentos = () => {
   const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
-    morada: '',
-    cidade: '',
-    tipoResiduo: '',
-    descricao: '',
-    urgente: false,
-    acessoDificil: false,
-    termos: false
-  })
+  nome: '',
+  email: '',
+  telefone: '',
+  morada: '',
+  cidade: '',
+  tipoResiduo: '',
+  descricao: '',
+  urgente: false,
+  acessoDificil: false,
+  termos: false,
+  imagens: [] // novo campo
+})
+
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
