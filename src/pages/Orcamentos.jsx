@@ -48,9 +48,13 @@ const Orcamentos = () => {
   setIsSubmitting(true)
 
   try {
+    const handleSubmit = async (e) => {
+  e.preventDefault()
+  setIsSubmitting(true)
+
+  try {
     const form = new FormData()
 
-    // Campos de texto
     form.append('nome', formData.nome)
     form.append('email', formData.email)
     form.append('telefone', formData.telefone)
@@ -62,12 +66,15 @@ const Orcamentos = () => {
     form.append('acessoDificil', formData.acessoDificil ? 'Sim' : 'Não')
     form.append('termos', formData.termos ? 'Aceitou' : 'Não aceitou')
 
-    // Arquivos (imagens)
+    // ✅ Adiciona campo 'message' genérico
+    form.append('message', 'Novo pedido de orçamento via website')
+
+    // ✅ Corrigido: nomes dos arquivos
     if (formData.imagens && formData.imagens.length > 0) {
-  formData.imagens.forEach((file, index) => {
-    form.append(`file${index + 1}`, file)
-  })
-}
+      formData.imagens.forEach((file, index) => {
+        form.append(`file${index + 1}`, file)
+      })
+    }
 
     const response = await fetch('https://formspree.io/f/xblkagae', {
       method: 'POST',
@@ -84,6 +91,7 @@ const Orcamentos = () => {
     setIsSubmitting(false)
   }
 }
+
 
 
   const tiposResiduo = [
