@@ -53,6 +53,11 @@ const Orcamentos = () => {
   setIsSubmitting(true)
 
   try {
+    const handleSubmit = async (e) => {
+  e.preventDefault()
+  setIsSubmitting(true)
+
+  try {
     const form = new FormData()
 
     form.append('nome', formData.nome)
@@ -65,11 +70,9 @@ const Orcamentos = () => {
     form.append('urgente', formData.urgente ? 'Sim' : 'Não')
     form.append('acessoDificil', formData.acessoDificil ? 'Sim' : 'Não')
     form.append('termos', formData.termos ? 'Aceitou' : 'Não aceitou')
-
-    // ✅ Adiciona campo 'message' genérico
     form.append('message', 'Novo pedido de orçamento via website')
 
-    // ✅ Corrigido: nomes dos arquivos
+    // Enviar imagens com nome file1, file2, etc.
     if (formData.imagens && formData.imagens.length > 0) {
       formData.imagens.forEach((file, index) => {
         form.append(`file${index + 1}`, file)
@@ -91,6 +94,7 @@ const Orcamentos = () => {
     setIsSubmitting(false)
   }
 }
+
 
 
 
