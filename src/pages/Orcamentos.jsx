@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import emailjs from '@emailjs/browser'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
 
 const Orcamentos = () => {
@@ -22,6 +21,7 @@ const Orcamentos = () => {
     imagens: []
   })
 
+  const formRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
@@ -33,28 +33,12 @@ const Orcamentos = () => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    const form = new FormData()
-    form.append('nome', formData.nome)
-    form.append('email', formData.email)
-    form.append('telefone', formData.telefone)
-    form.append('morada', formData.morada)
-    form.append('cidade', formData.cidade)
-    form.append('tipoResiduo', formData.tipoResiduo)
-    form.append('descricao', formData.descricao)
-    form.append('urgente', formData.urgente ? 'Sim' : 'Não')
-    form.append('acessoDificil', formData.acessoDificil ? 'Sim' : 'Não')
-
-    // imagens
-    if (formData.imagens.length > 0) {
-      form.append('attachments', formData.imagens[0]) // apenas uma imagem
-    }
-
     try {
       await emailjs.sendForm(
-        'service_u783k4t',
-        'template_a41pmvm',
-        e.target, // form HTML
-        'Fzcwt1Ax0RaIDF0QW'
+        'service_u783k4t',       // ID do serviço
+        'template_a41pmvm',      // ID do template
+        formRef.current,         // Ref do formulário
+        'Fzcwt1Ax0RaIDF0QW'      // Chave pública
       )
       setSubmitted(true)
     } catch (error) {
@@ -75,7 +59,7 @@ const Orcamentos = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
+    <form ref={formRef} onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
       <div>
         <Label htmlFor="nome">Nome</Label>
         <Input id="nome" name="nome" required value={formData.nome} onChange={(e) => handleInputChange('nome', e.target.value)} />
@@ -106,18 +90,24 @@ const Orcamentos = () => {
       </div>
       <div>
         <Label htmlFor="imagens">Imagem (opcional)</Label>
-        <Input id="imagens" name="attachments" type="file" accept="image/*" onChange={(e) => handleInputChange('imagens', Array.from(e.target.files))} />
+        <Input
+          id="imagens"
+          name="attachments" // Este campo precisa ser "attachments" no template do EmailJS
+          type="file"
+          accept="image/*"
+          onChange={(e) => handleInputChange('imagens', Array.from(e.target.files))}
+        />
       </div>
       <div className="flex items-center gap-2">
-        <Checkbox id="urgente" checked={formData.urgente} onCheckedChange={(v) => handleInputChange('urgente', v)} />
+        <Checkbox id="urgente" name="urgente" checked={formData.urgente} onCheckedChange={(v) => handleInputChange('urgente', v)} />
         <Label htmlFor="urgente">Urgente</Label>
       </div>
       <div className="flex items-center gap-2">
-        <Checkbox id="acessoDificil" checked={formData.acessoDificil} onCheckedChange={(v) => handleInputChange('acessoDificil', v)} />
+        <Checkbox id="acessoDificil" name="acessoDificil" checked={formData.acessoDificil} onCheckedChange={(v) => handleInputChange('acessoDificil', v)} />
         <Label htmlFor="acessoDificil">Acesso Difícil</Label>
       </div>
       <div className="flex items-center gap-2">
-        <Checkbox id="termos" required checked={formData.termos} onCheckedChange={(v) => handleInputChange('termos', v)} />
+        <Checkbox id="termos" name="termos" required checked={formData.termos} onCheckedChange={(v) => handleInputChange('termos', v)} />
         <Label htmlFor="termos">Aceito os termos</Label>
       </div>
       <Button type="submit" disabled={isSubmitting}>
