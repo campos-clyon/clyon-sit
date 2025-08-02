@@ -12,11 +12,7 @@ import {
   Clock,
   CheckCircle,
   Upload,
-  Phone,
-  MessageCircle,
-  Mail,
-  MapPin,
-  AlertCircle
+  MessageCircle
 } from 'lucide-react'
 
 const Orcamentos = () => {
@@ -49,7 +45,6 @@ const Orcamentos = () => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simular envio do formulário
     setTimeout(() => {
       setIsSubmitting(false)
       setSubmitted(true)
@@ -94,7 +89,7 @@ const Orcamentos = () => {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <Card className="max-w-md mx-auto">
           <CardContent className="p-8 text-center">
-            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-2" />
+            <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-4">Pedido Enviado!</h2>
             <p className="text-gray-600 mb-6">
               Recebemos o seu pedido de orçamento. Entraremos em contacto consigo
@@ -124,9 +119,8 @@ const Orcamentos = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
       <section className="clyon-hero text-white py-16">
-        <div className="clyon-container text-center ">
+        <div className="clyon-container text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Pedir Orçamento</h1>
           <p className="text-xl opacity-90 max-w-2xl mx-auto">
             Preencha o formulário e receba um orçamento gratuito e personalizado
@@ -134,7 +128,6 @@ const Orcamentos = () => {
         </div>
       </section>
 
-      {/* Vantagens */}
       <section className="py-12 bg-gray-50">
         <div className="clyon-container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -151,11 +144,9 @@ const Orcamentos = () => {
         </div>
       </section>
 
-      {/* Formulário */}
       <section className="clyon-section bg-white">
         <div className="clyon-container">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Formulário Principal */}
             <div className="lg:col-span-2">
               <Card>
                 <CardHeader>
@@ -163,34 +154,33 @@ const Orcamentos = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    {/* Dados Pessoais */}
+
                     <div className="space-y-4 my-2">
                       <h3 className="text-lg font-semibold my-2">Dados de Contacto</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="nome">Nome Completo *</Label>
-                          <Input id="nome" type="text" required value={formData.nome} onChange={(e) => handleInputChange('nome', e.target.value)} placeholder="Seu nome completo" />
+                          <Label htmlFor="nome" className="mb-1 block">Nome Completo *</Label>
+                          <Input id="nome" type="text" required value={formData.nome} onChange={(e) => handleInputChange('nome', e.target.value)} placeholder="Seu nome completo" className="mt-2" />
                         </div>
                         <div>
-                          <Label htmlFor="telefone">Telefone *</Label>
-                          <Input id="telefone" type="tel" required value={formData.telefone} onChange={(e) => handleInputChange('telefone', e.target.value)} placeholder="+351 xxx xxx xxx" />
+                          <Label htmlFor="telefone" className="mb-1 block">Telefone *</Label>
+                          <Input id="telefone" type="tel" required value={formData.telefone} onChange={(e) => handleInputChange('telefone', e.target.value)} placeholder="+351 xxx xxx xxx" className="mt-2" />
                         </div>
                       </div>
                       <div>
-                        <Label htmlFor="email">Email *</Label>
-                        <Input id="email" type="email" required value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} placeholder="seu@email.com" />
+                        <Label htmlFor="email" className="mb-1 block">Email *</Label>
+                        <Input id="email" type="email" required value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} placeholder="seu@email.com" className="mt-2" />
                       </div>
                     </div>
 
-                    {/* Localização */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold my-2">Localização do Serviço</h3>
                       <div>
-                        <Label htmlFor="morada">Morada Completa *</Label>
-                        <Input id="morada" type="text" required value={formData.morada} onChange={(e) => handleInputChange('morada', e.target.value)} placeholder="Rua, número, andar, código postal" />
+                        <Label htmlFor="morada" className="mb-1 block">Morada Completa *</Label>
+                        <Input id="morada" type="text" required value={formData.morada} onChange={(e) => handleInputChange('morada', e.target.value)} placeholder="Rua, número, andar, código postal" className="mt-2" />
                       </div>
                       <div>
-                        <Label htmlFor="cidade">Cidade *</Label>
+                        <Label htmlFor="cidade" className="mb-1 block">Cidade *</Label>
                         <Select onValueChange={(value) => handleInputChange('cidade', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione a cidade" />
@@ -206,11 +196,10 @@ const Orcamentos = () => {
                       </div>
                     </div>
 
-                    {/* Detalhes do Serviço */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold my-2">Detalhes do Serviço</h3>
                       <div>
-                        <Label htmlFor="tipoResiduo">Tipo de Resíduo *</Label>
+                        <Label htmlFor="tipoResiduo" className="mb-1 block">Tipo de Resíduo *</Label>
                         <Select onValueChange={(value) => handleInputChange('tipoResiduo', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione o tipo de resíduo" />
@@ -225,11 +214,11 @@ const Orcamentos = () => {
                         </Select>
                       </div>
                       <div>
-                        <Label htmlFor="descricao">Descrição Detalhada *</Label>
-                        <Textarea id="descricao" required value={formData.descricao} onChange={(e) => handleInputChange('descricao', e.target.value)} placeholder="Descreva detalhadamente..." rows={4} />
+                        <Label htmlFor="descricao" className="mb-1 block">Descrição Detalhada *</Label>
+                        <Textarea id="descricao" required value={formData.descricao} onChange={(e) => handleInputChange('descricao', e.target.value)} placeholder="Descreva detalhadamente..." rows={4} className="mt-2" />
                       </div>
                       <div>
-                        <Label>Upload de Fotos (opcional)</Label>
+                        <Label className="mb-1 block">Upload de Fotos (opcional)</Label>
                         <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                           <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                           <p className="text-sm text-gray-600">Clique para adicionar fotos ou arraste aqui</p>
@@ -238,7 +227,6 @@ const Orcamentos = () => {
                       </div>
                     </div>
 
-                    {/* Opções Especiais */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold my-2">Opções Especiais</h3>
                       <div className="space-y-3">
@@ -253,7 +241,6 @@ const Orcamentos = () => {
                       </div>
                     </div>
 
-                    {/* Termos */}
                     <div className="space-y-4">
                       <div className="flex items-start space-x-2">
                         <Checkbox id="termos" required checked={formData.termos} onCheckedChange={(checked) => handleInputChange('termos', checked)} />
@@ -261,7 +248,6 @@ const Orcamentos = () => {
                       </div>
                     </div>
 
-                    {/* Botão Submit */}
                     <Button type="submit" className="w-full clyon-button" size="lg" disabled={isSubmitting}>
                       {isSubmitting ? 'Enviando...' : 'Enviar Pedido de Orçamento'}
                     </Button>
@@ -269,8 +255,6 @@ const Orcamentos = () => {
                 </CardContent>
               </Card>
             </div>
-
-            {/* Sidebar omitido (já revisado e ok) */}
           </div>
         </div>
       </section>
