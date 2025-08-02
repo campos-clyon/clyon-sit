@@ -245,13 +245,17 @@ const Orcamentos = () => {
                         <Textarea id="descricao" required value={formData.descricao} onChange={(e) => handleInputChange('descricao', e.target.value)} placeholder="Descreva detalhadamente..." rows={4} className="mt-2" />
                       </div>
                       <div>
-                        <Label className="mb-1 block">Upload de Fotos (opcional)</Label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                          <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                          <p className="text-sm text-gray-600">Clique para adicionar fotos ou arraste aqui</p>
-                          <p className="text-xs text-gray-500 mt-1">Fotos ajudam a fazer um orçamento mais preciso</p>
-                        </div>
-                      </div>
+  <Label htmlFor="imagens" className="mb-1 block">Upload de Fotos (opcional)</Label>
+  <Input
+    id="imagens"
+    type="file"
+    accept="image/*"
+    multiple
+    onChange={(e) => handleInputChange('imagens', Array.from(e.target.files))}
+  />
+  <p className="text-xs text-gray-500 mt-1">Você pode enviar várias fotos</p>
+</div>
+
                     </div>
 
                     <div className="space-y-4">
