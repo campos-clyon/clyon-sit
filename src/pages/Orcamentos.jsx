@@ -64,10 +64,10 @@ const Orcamentos = () => {
 
     // Arquivos (imagens)
     if (formData.imagens && formData.imagens.length > 0) {
-      formData.imagens.forEach((file, index) => {
-        form.append('imagens', file)
-      })
-    }
+  formData.imagens.forEach((file, index) => {
+    form.append(`file${index + 1}`, file)
+  })
+}
 
     const response = await fetch('https://formspree.io/f/xblkagae', {
       method: 'POST',
