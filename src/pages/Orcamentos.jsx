@@ -36,6 +36,7 @@ const Orcamentos = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
+  const [imageBase64, setImageBase64] = useState('')
   const formRef = useRef(null)
   const fileInputRef = useRef(null)
 
@@ -57,9 +58,9 @@ const Orcamentos = () => {
         return
       }
       
-      // Verificar tamanho (máximo 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        alert('A imagem deve ter no máximo 5MB.')
+      // Verificar tamanho (máximo 2MB para EmailJS)
+      if (file.size > 2 * 1024 * 1024) {
+        alert('A imagem deve ter no máximo 2MB para envio por email.')
         return
       }
 
@@ -69,6 +70,8 @@ const Orcamentos = () => {
       const reader = new FileReader()
       reader.onload = (e) => {
         setImagePreview(e.target.result)
+        // Converter para base64 para envio via EmailJS
+        setImageBase64(e.target.result)
       }
       reader.readAsDataURL(file)
     }
@@ -77,6 +80,7 @@ const Orcamentos = () => {
   const removeImage = () => {
     setFormData(prev => ({ ...prev, imagem: null }))
     setImagePreview(null)
+    setImageBase64('')
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -87,17 +91,68 @@ const Orcamentos = () => {
     setIsSubmitting(true)
 
     try {
-      // Usa EmailJS para enviar o formulário
-      await emailjs.sendForm(
-        'service_u783k4t',
-        'template_a41pmvm',
-        formRef.current, // Passa o elemento do formulário diretamente
-        'Fzcwt1Ax0RaIDF0QW'
-      )
+      // Preparar dados para EmailJS
+      const templateParams = {
+        nome: formData.nome,
+        email: formData.email,
+        telefone: formData.telefone,
+        morada: formData.morada,
+        cidade: formData.cidade,
+        tipoResiduo: formData.tipoResiduo,
+        descricao: formData.descricao,
+        urgente: formData.urgente ? 'Sim' : 'Não',
+        acessoDificil: formData.acessoDificil ? 'Sim' : 'Não',
+        termos: formData.termos ? 'Aceitou' : 'Não aceitou',
+        // Incluir informação sobre imagem
+        temImagem: formData.imagem ? 'Sim - Imagem anexada' : 'Não',
+        nomeImagem: formData.imagem ? formData.imagem.name : '',
+        tamanhoImagem: formData.imagem ? `${(formData.imagem.size / 1024).toFixed(1)} KB` : ''
+      }
+
+      // Se há imagem, tentar enviar com anexo primeiro
+      if (formData.imagem && imageBase64) {
+        try {
+          // Método 1: Tentar enviar com anexo via FormData
+          const formDataToSend = new FormData()
+          Object.keys(templateParams).forEach(key => {
+            formDataToSend.append(key, templateParams[key])
+          })
+          formDataToSend.append('file', formData.imagem)
+
+          await emailjs.sendForm(
+            'service_u783k4t',
+            'template_a41pmvm',
+            formRef.current,
+            'Fzcwt1Ax0RaIDF0QW'
+          )
+        } catch (attachmentError) {
+          console.log('Erro com anexo, tentando sem anexo:', attachmentError)
+          
+          // Método 2: Enviar sem anexo, mas com informações da imagem
+          await emailjs.send(
+            'service_u783k4t',
+            'template_a41pmvm',
+            {
+              ...templateParams,
+              observacoes: `${templateParams.descricao}\n\nNOTA: Cliente tentou anexar imagem "${templateParams.nomeImagem}" (${templateParams.tamanhoImagem}). Por favor, solicite o reenvio da imagem por WhatsApp ou email.`
+            },
+            'Fzcwt1Ax0RaIDF0QW'
+          )
+        }
+      } else {
+        // Enviar sem imagem
+        await emailjs.send(
+          'service_u783k4t',
+          'template_a41pmvm',
+          templateParams,
+          'Fzcwt1Ax0RaIDF0QW'
+        )
+      }
+
       setSubmitted(true)
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error)
-      alert("Ocorreu um erro ao enviar o formulário. Tente novamente.")
+      alert("Ocorreu um erro ao enviar o formulário. Tente novamente ou entre em contato via WhatsApp.")
     } finally {
       setIsSubmitting(false)
     }
@@ -147,6 +202,11 @@ const Orcamentos = () => {
               Recebemos o seu pedido de orçamento. Entraremos em contacto consigo
               em até 2 horas durante o horário comercial.
             </p>
+            {formData.imagem && (
+              <p className="text-sm text-amber-600 mb-4">
+                📷 Se a imagem não foi enviada automaticamente, por favor reenvie via WhatsApp para um orçamento mais preciso.
+              </p>
+            )}
             <div className="space-y-3">
               <p className="text-sm text-gray-500">
                 <strong>Referência:</strong> #{Math.random().toString(36).substr(2, 9).toUpperCase()}
@@ -205,7 +265,7 @@ const Orcamentos = () => {
                   <CardTitle className="text-2xl">Dados do Orçamento</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <form ref={formRef} onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
+                  <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
 
                     <div className="space-y-4 my-2">
                       <h3 className="text-lg font-semibold my-2">Dados de Contacto</h3>
@@ -281,8 +341,6 @@ const Orcamentos = () => {
                             ))}
                           </SelectContent>
                         </Select>
-                        {/* Campo hidden para enviar o valor da cidade selecionada */}
-                        <input type="hidden" name="cidade" value={formData.cidade} />
                       </div>
                     </div>
 
@@ -302,8 +360,6 @@ const Orcamentos = () => {
                             ))}
                           </SelectContent>
                         </Select>
-                        {/* Campo hidden para enviar o valor do tipo de resíduo selecionado */}
-                        <input type="hidden" name="tipoResiduo" value={formData.tipoResiduo} />
                       </div>
                       <div>
                         <Label htmlFor="descricao" className="mb-1 block">Descrição Detalhada *</Label>
@@ -330,7 +386,7 @@ const Orcamentos = () => {
                           >
                             <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                             <p className="text-sm text-gray-600">Clique para adicionar uma foto</p>
-                            <p className="text-xs text-gray-500 mt-1">Máximo 5MB - JPG, PNG, GIF</p>
+                            <p className="text-xs text-gray-500 mt-1">Máximo 2MB - JPG, PNG, GIF</p>
                             <p className="text-xs text-gray-500">Fotos ajudam a fazer um orçamento mais preciso</p>
                           </div>
                         ) : (
@@ -358,6 +414,9 @@ const Orcamentos = () => {
                               />
                             </div>
                             <p className="text-xs text-gray-500 mt-2">{formData.imagem?.name}</p>
+                            <p className="text-xs text-amber-600 mt-1">
+                              💡 Se houver problemas no envio, a imagem pode ser enviada via WhatsApp
+                            </p>
                           </div>
                         )}
                         
@@ -382,8 +441,6 @@ const Orcamentos = () => {
                             onCheckedChange={(checked) => handleInputChange('urgente', checked)} 
                           />
                           <Label htmlFor="urgente" className="text-sm">Serviço urgente</Label>
-                          {/* Campo hidden para enviar o valor do checkbox */}
-                          <input type="hidden" name="urgente" value={formData.urgente ? 'Sim' : 'Não'} />
                         </div>
                         <div className="flex items-center space-x-2">
                           <Checkbox 
@@ -392,8 +449,6 @@ const Orcamentos = () => {
                             onCheckedChange={(checked) => handleInputChange('acessoDificil', checked)} 
                           />
                           <Label htmlFor="acessoDificil" className="text-sm">Local de acesso difícil</Label>
-                          {/* Campo hidden para enviar o valor do checkbox */}
-                          <input type="hidden" name="acessoDificil" value={formData.acessoDificil ? 'Sim' : 'Não'} />
                         </div>
                       </div>
                     </div>
@@ -407,8 +462,6 @@ const Orcamentos = () => {
                           onCheckedChange={(checked) => handleInputChange('termos', checked)} 
                         />
                         <Label htmlFor="termos" className="text-sm">Aceito os termos e autorizo o contacto *</Label>
-                        {/* Campo hidden para enviar o valor do checkbox */}
-                        <input type="hidden" name="termos" value={formData.termos ? 'Aceitou' : 'Não aceitou'} />
                       </div>
                     </div>
 
