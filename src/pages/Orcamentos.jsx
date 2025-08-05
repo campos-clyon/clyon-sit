@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
-
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -9,7 +8,6 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Checkbox } from '@/components/ui/checkbox'
-
 import {
   FileText,
   Clock,
@@ -40,6 +38,7 @@ const Orcamentos = () => {
   const [imagePreview, setImagePreview] = useState(null)
   const formRef = useRef(null)
   const fileInputRef = useRef(null)
+
   const navigate = useNavigate()
 
   const handleInputChange = (field, value) => {
@@ -52,18 +51,21 @@ const Orcamentos = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
+      // Verificar se é uma imagem
       if (!file.type.startsWith('image/')) {
         alert('Por favor, selecione apenas arquivos de imagem.')
         return
       }
-
-      if (file.size > 2 * 1024 * 1024) {
-        alert('A imagem deve ter no máximo 2MB.')
+      
+      // Verificar tamanho (máximo 1MB para anexo)
+      if (file.size > 1 * 1024 * 1024) {
+        alert('A imagem deve ter no máximo 1MB para anexo no email.')
         return
       }
 
       setFormData(prev => ({ ...prev, imagem: file }))
-
+      
+      // Criar preview da imagem
       const reader = new FileReader()
       reader.onload = (e) => {
         setImagePreview(e.target.result)
@@ -79,38 +81,131 @@ const Orcamentos = () => {
       fileInputRef.current.value = ''
     }
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
 
     try {
-      const formDataToSend = new FormData()
-      formDataToSend.append('nome', formData.nome)
-      formDataToSend.append('email', formData.email)
-      formDataToSend.append('telefone', formData.telefone)
-      formDataToSend.append('morada', formData.morada)
-      formDataToSend.append('cidade', formData.cidade)
-      formDataToSend.append('tipoResiduo', formData.tipoResiduo)
-      formDataToSend.append('descricao', formData.descricao)
-      formDataToSend.append('urgente', formData.urgente ? 'Sim' : 'Não')
-      formDataToSend.append('acessoDificil', formData.acessoDificil ? 'Sim' : 'Não')
-      formDataToSend.append('termos', formData.termos ? 'Aceitou' : 'Não aceitou')
-
+      // Método 1: Tentar com FormData e anexo real
       if (formData.imagem) {
-        formDataToSend.append('attachment', formData.imagem)
+        try {
+          // Criar FormData com todos os campos
+          const formDataToSend = new FormData()
+          
+          // Adicionar todos os campos do formulário
+          formDataToSend.append('nome', formData.nome)
+          formDataToSend.append('email', formData.email)
+          formDataToSend.append('telefone', formData.telefone)
+          formDataToSend.append('morada', formData.morada)
+          formDataToSend.append('cidade', formData.cidade)
+          formDataToSend.append('tipoResiduo', formData.tipoResiduo)
+          formDataToSend.append('descricao', formData.descricao)
+          formDataToSend.append('urgente', formData.urgente ? 'Sim' : 'Não')
+          formDataToSend.append('acessoDificil', formData.acessoDificil ? 'Sim' : 'Não')
+          formDataToSend.append('termos', formData.termos ? 'Aceitou' : 'Não aceitou')
+          
+          // Adicionar arquivo
+          formDataToSend.append('attachment', formData.imagem)
+          
+          // Tentar enviar com anexo usando sendForm
+          await emailjs.sendForm(
+            'service_u783k4t',
+            'template_a41pmvm',
+            formDataToSend,
+            'Fzcwt1Ax0RaIDF0QW'
+          )
+          
+          console.log('Email enviado com anexo!')
+          setSubmitted(true)
+          
+        } catch (attachmentError) {
+          console.log('Erro com anexo, tentando método alternativo:', attachmentError)
+          
+          // Método 2: Converter para Base64 e incluir no email
+          const reader = new FileReader()
+          reader.onload = async (e) => {
+            try {
+              const base64Image = e.target.result
+              
+              await emailjs.send(
+                'service_u783k4t',
+                'template_a41pmvm',
+                {
+                  nome: formData.nome,
+                  email: formData.email,
+                  telefone: formData.telefone,
+                  morada: formData.morada,
+                  cidade: formData.cidade,
+                  tipoResiduo: formData.tipoResiduo,
+                  descricao: formData.descricao,
+                  urgente: formData.urgente ? 'Sim' : 'Não',
+                  acessoDificil: formData.acessoDificil ? 'Sim' : 'Não',
+                  termos: formData.termos ? 'Aceitou' : 'Não aceitou',
+                  imagemBase64: base64Image,
+                  nomeImagem: formData.imagem.name,
+                  tamanhoImagem: `${(formData.imagem.size / 1024).toFixed(1)} KB`
+                },
+                'Fzcwt1Ax0RaIDF0QW'
+              )
+              
+              console.log('Email enviado com Base64!')
+              setSubmitted(true)
+              
+            } catch (base64Error) {
+              console.error('Erro com Base64:', base64Error)
+              
+              // Método 3: Fallback - enviar sem imagem mas com informações
+              await emailjs.send(
+                'service_u783k4t',
+                'template_a41pmvm',
+                {
+                  nome: formData.nome,
+                  email: formData.email,
+                  telefone: formData.telefone,
+                  morada: formData.morada,
+                  cidade: formData.cidade,
+                  tipoResiduo: formData.tipoResiduo,
+                  descricao: `${formData.descricao}\n\n--- IMAGEM NÃO ANEXADA ---\nNome: ${formData.imagem.name}\nTamanho: ${(formData.imagem.size / 1024).toFixed(1)} KB\nPor favor, solicite o reenvio via WhatsApp.`,
+                  urgente: formData.urgente ? 'Sim' : 'Não',
+                  acessoDificil: formData.acessoDificil ? 'Sim' : 'Não',
+                  termos: formData.termos ? 'Aceitou' : 'Não aceitou'
+                },
+                'Fzcwt1Ax0RaIDF0QW'
+              )
+              
+              setSubmitted(true)
+            } finally {
+              setIsSubmitting(false)
+            }
+          }
+          reader.readAsDataURL(formData.imagem)
+        }
+      } else {
+        // Sem imagem - envio normal
+        await emailjs.send(
+          'service_u783k4t',
+          'template_a41pmvm',
+          {
+            nome: formData.nome,
+            email: formData.email,
+            telefone: formData.telefone,
+            morada: formData.morada,
+            cidade: formData.cidade,
+            tipoResiduo: formData.tipoResiduo,
+            descricao: formData.descricao,
+            urgente: formData.urgente ? 'Sim' : 'Não',
+            acessoDificil: formData.acessoDificil ? 'Sim' : 'Não',
+            termos: formData.termos ? 'Aceitou' : 'Não aceitou'
+          },
+          'Fzcwt1Ax0RaIDF0QW'
+        )
+        
+        setSubmitted(true)
       }
-
-      await emailjs.sendForm(
-        'service_u783k4t',
-        'template_a41pmvm',
-        formDataToSend,
-        'Fzcwt1Ax0RaIDF0QW'
-      )
-
-      setSubmitted(true)
     } catch (error) {
       console.error("Erro ao enviar o formulário:", error)
-      alert("Erro ao enviar. Tente novamente ou entre em contato via WhatsApp.")
+      alert("Ocorreu um erro ao enviar o formulário. Tente novamente ou entre em contato via WhatsApp.")
     } finally {
       setIsSubmitting(false)
     }
@@ -161,8 +256,8 @@ const Orcamentos = () => {
               em até 2 horas durante o horário comercial.
             </p>
             {formData.imagem && (
-              <p className="text-sm text-amber-600 mb-4">
-                📷 Se a imagem não foi enviada automaticamente, por favor reenvie via WhatsApp.
+              <p className="text-sm text-green-600 mb-4">
+                📷 Tentamos anexar sua imagem ao email. Se não chegou como anexo, solicitaremos via WhatsApp.
               </p>
             )}
             <div className="space-y-3">
@@ -176,7 +271,7 @@ const Orcamentos = () => {
                     WhatsApp para Urgências
                   </a>
                 </Button>
-                <Button variant="outline" onClick={() => window.location.href = '/orcamentos'}>
+                <Button variant="outline" onClick={() => navigate('/orcamentos')}>
                   Fazer Novo Pedido
                 </Button>
               </div>
@@ -186,6 +281,7 @@ const Orcamentos = () => {
       </div>
     )
   }
+
   return (
     <div className="min-h-screen">
       <section className="clyon-hero text-white py-16">
@@ -223,125 +319,138 @@ const Orcamentos = () => {
                 </CardHeader>
                 <CardContent>
                   <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
-                    {/* Dados de Contacto */}
+
                     <div className="space-y-4 my-2">
                       <h3 className="text-lg font-semibold my-2">Dados de Contacto</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="nome">Nome Completo *</Label>
-                          <Input
-                            id="nome"
+                          <Label htmlFor="nome" className="mb-1 block">Nome Completo *</Label>
+                          <Input 
+                            id="nome" 
                             name="nome"
-                            required
-                            value={formData.nome}
-                            onChange={(e) => handleInputChange('nome', e.target.value)}
-                            placeholder="Seu nome completo"
+                            type="text" 
+                            required 
+                            value={formData.nome} 
+                            onChange={(e) => handleInputChange('nome', e.target.value)} 
+                            placeholder="Seu nome completo" 
+                            className="mt-2" 
                           />
                         </div>
                         <div>
-                          <Label htmlFor="telefone">Telefone *</Label>
-                          <Input
-                            id="telefone"
+                          <Label htmlFor="telefone" className="mb-1 block">Telefone *</Label>
+                          <Input 
+                            id="telefone" 
                             name="telefone"
-                            required
-                            value={formData.telefone}
-                            onChange={(e) => handleInputChange('telefone', e.target.value)}
-                            placeholder="+351 xxx xxx xxx"
+                            type="tel" 
+                            required 
+                            value={formData.telefone} 
+                            onChange={(e) => handleInputChange('telefone', e.target.value)} 
+                            placeholder="+351 xxx xxx xxx" 
+                            className="mt-2" 
                           />
                         </div>
                       </div>
                       <div>
-                        <Label htmlFor="email">Email *</Label>
-                        <Input
-                          id="email"
+                        <Label htmlFor="email" className="mb-1 block">Email *</Label>
+                        <Input 
+                          id="email" 
                           name="email"
-                          type="email"
-                          required
-                          value={formData.email}
-                          onChange={(e) => handleInputChange('email', e.target.value)}
-                          placeholder="seu@email.com"
+                          type="email" 
+                          required 
+                          value={formData.email} 
+                          onChange={(e) => handleInputChange('email', e.target.value)} 
+                          placeholder="seu@email.com" 
+                          className="mt-2" 
                         />
                       </div>
                     </div>
 
-                    {/* Localização */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold my-2">Localização do Serviço</h3>
                       <div>
-                        <Label htmlFor="morada">Morada Completa *</Label>
-                        <Input
-                          id="morada"
+                        <Label htmlFor="morada" className="mb-1 block">Morada Completa *</Label>
+                        <Input 
+                          id="morada" 
                           name="morada"
-                          required
-                          value={formData.morada}
-                          onChange={(e) => handleInputChange('morada', e.target.value)}
-                          placeholder="Rua, número, andar, código postal"
+                          type="text" 
+                          required 
+                          value={formData.morada} 
+                          onChange={(e) => handleInputChange('morada', e.target.value)} 
+                          placeholder="Rua, número, andar, código postal" 
+                          className="mt-2" 
                         />
                       </div>
                       <div>
-                        <Label htmlFor="cidade">Cidade *</Label>
+                        <Label htmlFor="cidade" className="mb-1 block">Cidade *</Label>
                         <Select onValueChange={(value) => handleInputChange('cidade', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione a cidade" />
                           </SelectTrigger>
                           <SelectContent>
                             {cidades.map((cidade) => (
-                              <SelectItem key={cidade} value={cidade}>{cidade}</SelectItem>
+                              <SelectItem key={cidade} value={cidade}>
+                                {cidade}
+                              </SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
                       </div>
                     </div>
 
-                    {/* Tipo e Descrição */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold my-2">Detalhes do Serviço</h3>
                       <div>
-                        <Label htmlFor="tipoResiduo">Tipo de Resíduo *</Label>
+                        <Label htmlFor="tipoResiduo" className="mb-1 block">Tipo de Resíduo *</Label>
                         <Select onValueChange={(value) => handleInputChange('tipoResiduo', value)}>
                           <SelectTrigger>
                             <SelectValue placeholder="Selecione o tipo de resíduo" />
                           </SelectTrigger>
                           <SelectContent>
                             {tiposResiduo.map((tipo) => (
-                              <SelectItem key={tipo} value={tipo}>{tipo}</SelectItem>
+                              <SelectItem key={tipo} value={tipo}>
+                                {tipo}
+                              </SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
                       </div>
                       <div>
-                        <Label htmlFor="descricao">Descrição Detalhada *</Label>
-                        <Textarea
-                          id="descricao"
+                        <Label htmlFor="descricao" className="mb-1 block">Descrição Detalhada *</Label>
+                        <Textarea 
+                          id="descricao" 
                           name="descricao"
-                          required
-                          value={formData.descricao}
-                          onChange={(e) => handleInputChange('descricao', e.target.value)}
-                          placeholder="Descreva detalhadamente..."
-                          rows={4}
+                          required 
+                          value={formData.descricao} 
+                          onChange={(e) => handleInputChange('descricao', e.target.value)} 
+                          placeholder="Descreva detalhadamente..." 
+                          rows={4} 
+                          className="mt-2" 
                         />
                       </div>
-
-                      {/* Upload de imagem */}
+                      
+                      {/* Seção de Upload de Imagem com Anexo Real */}
                       <div>
-                        <Label>Upload de Foto (opcional)</Label>
+                        <Label className="mb-1 block">Upload de Fotos (opcional)</Label>
+                        
                         {!imagePreview ? (
-                          <div
-                            className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-gray-400"
+                          <div 
+                            className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-gray-400 transition-colors"
                             onClick={() => fileInputRef.current?.click()}
                           >
                             <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
                             <p className="text-sm text-gray-600">Clique para adicionar uma foto</p>
-                            <p className="text-xs text-gray-500">Máximo 2MB</p>
+                            <p className="text-xs text-gray-500 mt-1">Máximo 1MB - JPG, PNG, GIF</p>
+                            <p className="text-xs text-green-600">📎 Tentaremos anexar no email!</p>
                           </div>
                         ) : (
-                          <div className="border rounded p-4">
-                            <div className="flex justify-between items-center mb-2">
+                          <div className="border-2 border-green-300 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
                               <div className="flex items-center space-x-2">
-                                <Image className="h-4 w-4 text-green-500" />
-                                <span className="text-sm">{formData.imagem.name}</span>
+                                <Image className="h-5 w-5 text-green-600" />
+                                <span className="text-sm font-medium text-green-600">Imagem pronta para anexar</span>
                               </div>
                               <Button
+                                type="button"
                                 variant="ghost"
                                 size="sm"
                                 onClick={removeImage}
@@ -350,13 +459,20 @@ const Orcamentos = () => {
                                 <X className="h-4 w-4" />
                               </Button>
                             </div>
-                            <img
-                              src={imagePreview}
-                              alt="Pré-visualização"
-                              className="h-32 object-cover rounded border"
-                            />
+                            <div className="relative">
+                              <img 
+                                src={imagePreview} 
+                                alt="Preview" 
+                                className="max-w-full h-32 object-cover rounded border"
+                              />
+                            </div>
+                            <p className="text-xs text-gray-500 mt-2">{formData.imagem?.name}</p>
+                            <p className="text-xs text-green-600 mt-1">
+                              📎 Esta imagem será anexada ao email
+                            </p>
                           </div>
                         )}
+                        
                         <Input
                           ref={fileInputRef}
                           type="file"
@@ -368,35 +484,35 @@ const Orcamentos = () => {
                       </div>
                     </div>
 
-                    {/* Checkboxes */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold my-2">Opções Especiais</h3>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="urgente"
-                          checked={formData.urgente}
-                          onCheckedChange={(checked) => handleInputChange('urgente', checked)}
-                        />
-                        <Label htmlFor="urgente">Serviço urgente</Label>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="acessoDificil"
-                          checked={formData.acessoDificil}
-                          onCheckedChange={(checked) => handleInputChange('acessoDificil', checked)}
-                        />
-                        <Label htmlFor="acessoDificil">Local de acesso difícil</Label>
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-2">
+                          <Checkbox 
+                            id="urgente" 
+                            checked={formData.urgente} 
+                            onCheckedChange={(checked) => handleInputChange('urgente', checked)} 
+                          />
+                          <Label htmlFor="urgente" className="text-sm">Serviço urgente</Label>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <Checkbox 
+                            id="acessoDificil" 
+                            checked={formData.acessoDificil} 
+                            onCheckedChange={(checked) => handleInputChange('acessoDificil', checked)} 
+                          />
+                          <Label htmlFor="acessoDificil" className="text-sm">Local de acesso difícil</Label>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Termos */}
                     <div className="space-y-4">
                       <div className="flex items-start space-x-2">
-                        <Checkbox
-                          id="termos"
-                          required
-                          checked={formData.termos}
-                          onCheckedChange={(checked) => handleInputChange('termos', checked)}
+                        <Checkbox 
+                          id="termos" 
+                          required 
+                          checked={formData.termos} 
+                          onCheckedChange={(checked) => handleInputChange('termos', checked)} 
                         />
                         <Label htmlFor="termos" className="text-sm">Aceito os termos e autorizo o contacto *</Label>
                       </div>
