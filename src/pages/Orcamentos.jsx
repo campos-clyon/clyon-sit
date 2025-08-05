@@ -36,7 +36,6 @@ const Orcamentos = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
-  const [imageBase64, setImageBase64] = useState('')
   const formRef = useRef(null)
   const fileInputRef = useRef(null)
 
@@ -58,9 +57,9 @@ const Orcamentos = () => {
         return
       }
       
-      // Verificar tamanho (máximo 2MB para EmailJS)
+      // Verificar tamanho (máximo 2MB)
       if (file.size > 2 * 1024 * 1024) {
-        alert('A imagem deve ter no máximo 2MB para envio por email.')
+        alert('A imagem deve ter no máximo 2MB.')
         return
       }
 
@@ -70,8 +69,6 @@ const Orcamentos = () => {
       const reader = new FileReader()
       reader.onload = (e) => {
         setImagePreview(e.target.result)
-        // Converter para base64 para envio via EmailJS
-        setImageBase64(e.target.result)
       }
       reader.readAsDataURL(file)
     }
@@ -80,7 +77,6 @@ const Orcamentos = () => {
   const removeImage = () => {
     setFormData(prev => ({ ...prev, imagem: null }))
     setImagePreview(null)
-    setImageBase64('')
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -91,63 +87,31 @@ const Orcamentos = () => {
     setIsSubmitting(true)
 
     try {
-      // Preparar dados para EmailJS
-      const templateParams = {
-        nome: formData.nome,
-        email: formData.email,
-        telefone: formData.telefone,
-        morada: formData.morada,
-        cidade: formData.cidade,
-        tipoResiduo: formData.tipoResiduo,
-        descricao: formData.descricao,
-        urgente: formData.urgente ? 'Sim' : 'Não',
-        acessoDificil: formData.acessoDificil ? 'Sim' : 'Não',
-        termos: formData.termos ? 'Aceitou' : 'Não aceitou',
-        // Incluir informação sobre imagem
-        temImagem: formData.imagem ? 'Sim - Imagem anexada' : 'Não',
-        nomeImagem: formData.imagem ? formData.imagem.name : '',
-        tamanhoImagem: formData.imagem ? `${(formData.imagem.size / 1024).toFixed(1)} KB` : ''
+      // Preparar descrição completa incluindo informações da imagem
+      let descricaoCompleta = formData.descricao
+      
+      if (formData.imagem) {
+        descricaoCompleta += `\n\n--- INFORMAÇÕES DA IMAGEM ---\nNome do arquivo: ${formData.imagem.name}\nTamanho: ${(formData.imagem.size / 1024).toFixed(1)} KB\nNOTA: Se a imagem não foi anexada automaticamente, por favor solicite o reenvio via WhatsApp.`
       }
 
-      // Se há imagem, tentar enviar com anexo primeiro
-      if (formData.imagem && imageBase64) {
-        try {
-          // Método 1: Tentar enviar com anexo via FormData
-          const formDataToSend = new FormData()
-          Object.keys(templateParams).forEach(key => {
-            formDataToSend.append(key, templateParams[key])
-          })
-          formDataToSend.append('file', formData.imagem)
-
-          await emailjs.sendForm(
-            'service_u783k4t',
-            'template_a41pmvm',
-            formRef.current,
-            'Fzcwt1Ax0RaIDF0QW'
-          )
-        } catch (attachmentError) {
-          console.log('Erro com anexo, tentando sem anexo:', attachmentError)
-          
-          // Método 2: Enviar sem anexo, mas com informações da imagem
-          await emailjs.send(
-            'service_u783k4t',
-            'template_a41pmvm',
-            {
-              ...templateParams,
-              observacoes: `${templateParams.descricao}\n\nNOTA: Cliente tentou anexar imagem "${templateParams.nomeImagem}" (${templateParams.tamanhoImagem}). Por favor, solicite o reenvio da imagem por WhatsApp ou email.`
-            },
-            'Fzcwt1Ax0RaIDF0QW'
-          )
-        }
-      } else {
-        // Enviar sem imagem
-        await emailjs.send(
-          'service_u783k4t',
-          'template_a41pmvm',
-          templateParams,
-          'Fzcwt1Ax0RaIDF0QW'
-        )
-      }
+      // Usar emailjs.send com parâmetros simples (sem variáveis condicionais)
+      await emailjs.send(
+        'service_u783k4t',
+        'template_a41pmvm',
+        {
+          nome: formData.nome,
+          email: formData.email,
+          telefone: formData.telefone,
+          morada: formData.morada,
+          cidade: formData.cidade,
+          tipoResiduo: formData.tipoResiduo,
+          descricao: descricaoCompleta,
+          urgente: formData.urgente ? 'Sim' : 'Não',
+          acessoDificil: formData.acessoDificil ? 'Sim' : 'Não',
+          termos: formData.termos ? 'Aceitou' : 'Não aceitou'
+        },
+        'Fzcwt1Ax0RaIDF0QW'
+      )
 
       setSubmitted(true)
     } catch (error) {
@@ -375,7 +339,7 @@ const Orcamentos = () => {
                         />
                       </div>
                       
-                      {/* Seção de Upload de Imagem Melhorada */}
+                      {/* Seção de Upload de Imagem */}
                       <div>
                         <Label className="mb-1 block">Upload de Fotos (opcional)</Label>
                         
@@ -415,7 +379,7 @@ const Orcamentos = () => {
                             </div>
                             <p className="text-xs text-gray-500 mt-2">{formData.imagem?.name}</p>
                             <p className="text-xs text-amber-600 mt-1">
-                              💡 Se houver problemas no envio, a imagem pode ser enviada via WhatsApp
+                              💡 Informações da imagem serão incluídas na descrição
                             </p>
                           </div>
                         )}
