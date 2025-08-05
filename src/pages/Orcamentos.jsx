@@ -182,9 +182,9 @@ const Orcamentos = () => {
                     WhatsApp para Urgências
                   </a>
                 </Button>
-                <Button variant="outline" onClick={() => navigate('/orcamentos')}>
-                  Fazer Novo Pedido
-                </Button>
+                <Button variant="outline" onClick={() => window.location.href = '/orcamentos'}>
+  Fazer Novo Pedido
+</Button>
               </div>
             </div>
           </CardContent>
