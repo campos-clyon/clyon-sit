@@ -13,7 +13,9 @@ import {
   Clock,
   CheckCircle,
   Upload,
-  MessageCircle
+  MessageCircle,
+  X,
+  Image
 } from 'lucide-react'
 
 const Orcamentos = () => {
@@ -33,7 +35,9 @@ const Orcamentos = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [imagePreview, setImagePreview] = useState(null)
   const formRef = useRef(null)
+  const fileInputRef = useRef(null)
 
   const navigate = useNavigate()
 
@@ -42,6 +46,40 @@ const Orcamentos = () => {
       ...prev,
       [field]: value
     }))
+  }
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      // Verificar se é uma imagem
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor, selecione apenas arquivos de imagem.')
+        return
+      }
+      
+      // Verificar tamanho (máximo 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('A imagem deve ter no máximo 5MB.')
+        return
+      }
+
+      setFormData(prev => ({ ...prev, imagem: file }))
+      
+      // Criar preview da imagem
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setImagePreview(e.target.result)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const removeImage = () => {
+    setFormData(prev => ({ ...prev, imagem: null }))
+    setImagePreview(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
   }
 
   const handleSubmit = async (e) => {
@@ -280,23 +318,57 @@ const Orcamentos = () => {
                           className="mt-2" 
                         />
                       </div>
+                      
+                      {/* Seção de Upload de Imagem Melhorada */}
                       <div>
                         <Label className="mb-1 block">Upload de Fotos (opcional)</Label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                          <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                          <Input
-                            type="file"
-                            name="file"
-                            accept="image/*"
-                            onChange={(e) => handleInputChange('imagem', e.target.files[0])}
-                            className="hidden"
-                            id="file-upload"
-                          />
-                          <Label htmlFor="file-upload" className="cursor-pointer">
-                            <p className="text-sm text-gray-600">Clique para adicionar fotos ou arraste aqui</p>
-                            <p className="text-xs text-gray-500 mt-1">Fotos ajudam a fazer um orçamento mais preciso</p>
-                          </Label>
-                        </div>
+                        
+                        {!imagePreview ? (
+                          <div 
+                            className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-gray-400 transition-colors"
+                            onClick={() => fileInputRef.current?.click()}
+                          >
+                            <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                            <p className="text-sm text-gray-600">Clique para adicionar uma foto</p>
+                            <p className="text-xs text-gray-500 mt-1">Máximo 5MB - JPG, PNG, GIF</p>
+                            <p className="text-xs text-gray-500">Fotos ajudam a fazer um orçamento mais preciso</p>
+                          </div>
+                        ) : (
+                          <div className="border-2 border-gray-300 rounded-lg p-4">
+                            <div className="flex items-center justify-between mb-2">
+                              <div className="flex items-center space-x-2">
+                                <Image className="h-5 w-5 text-green-600" />
+                                <span className="text-sm font-medium text-green-600">Imagem selecionada</span>
+                              </div>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={removeImage}
+                                className="text-red-500 hover:text-red-700"
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </div>
+                            <div className="relative">
+                              <img 
+                                src={imagePreview} 
+                                alt="Preview" 
+                                className="max-w-full h-32 object-cover rounded border"
+                              />
+                            </div>
+                            <p className="text-xs text-gray-500 mt-2">{formData.imagem?.name}</p>
+                          </div>
+                        )}
+                        
+                        <Input
+                          ref={fileInputRef}
+                          type="file"
+                          name="file"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          className="hidden"
+                        />
                       </div>
                     </div>
 
