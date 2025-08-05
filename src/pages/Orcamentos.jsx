@@ -271,10 +271,9 @@ const Orcamentos = () => {
                     WhatsApp para Urgências
                   </a>
                 </Button>
-                <Button variant="outline" onClick={() => window.location.reload()}>
+                <button variant="outline" onClick={() => { window.location.reload(); window.scrollTo(0, 0); }}>
                   Fazer Novo Pedido
-               </Button>
-
+                </button>
               </div>
             </div>
           </CardContent>
