@@ -33,18 +33,12 @@ const Orcamentos = () => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    const form = new FormData(formRef.current)
-
-    // Anexa imagem com o nome correto para EmailJS (deve bater com {{file}} no template)
-    if (formData.imagem) {
-      form.append('file', formData.imagem)
-    }
-
     try {
+      // Passa o elemento do formulário diretamente para o EmailJS
       await emailjs.sendForm(
         'service_u783k4t',
         'template_a41pmvm',
-        form,
+        formRef.current, // Passa o elemento do formulário, não FormData
         'Fzcwt1Ax0RaIDF0QW'
       )
       setSubmitted(true)
@@ -69,31 +63,69 @@ const Orcamentos = () => {
     <form ref={formRef} onSubmit={handleSubmit} encType="multipart/form-data" className="space-y-6">
       <div>
         <Label htmlFor="nome">Nome</Label>
-        <Input id="nome" name="nome" required value={formData.nome} onChange={(e) => handleInputChange('nome', e.target.value)} />
+        <Input 
+          id="nome" 
+          name="nome" 
+          required 
+          value={formData.nome} 
+          onChange={(e) => handleInputChange('nome', e.target.value)} 
+        />
       </div>
       <div>
         <Label htmlFor="email">Email</Label>
-        <Input id="email" name="email" type="email" required value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} />
+        <Input 
+          id="email" 
+          name="email" 
+          type="email" 
+          required 
+          value={formData.email} 
+          onChange={(e) => handleInputChange('email', e.target.value)} 
+        />
       </div>
       <div>
         <Label htmlFor="telefone">Telefone</Label>
-        <Input id="telefone" name="telefone" value={formData.telefone} onChange={(e) => handleInputChange('telefone', e.target.value)} />
+        <Input 
+          id="telefone" 
+          name="telefone" 
+          value={formData.telefone} 
+          onChange={(e) => handleInputChange('telefone', e.target.value)} 
+        />
       </div>
       <div>
         <Label htmlFor="morada">Morada</Label>
-        <Input id="morada" name="morada" value={formData.morada} onChange={(e) => handleInputChange('morada', e.target.value)} />
+        <Input 
+          id="morada" 
+          name="morada" 
+          value={formData.morada} 
+          onChange={(e) => handleInputChange('morada', e.target.value)} 
+        />
       </div>
       <div>
         <Label htmlFor="cidade">Cidade</Label>
-        <Input id="cidade" name="cidade" value={formData.cidade} onChange={(e) => handleInputChange('cidade', e.target.value)} />
+        <Input 
+          id="cidade" 
+          name="cidade" 
+          value={formData.cidade} 
+          onChange={(e) => handleInputChange('cidade', e.target.value)} 
+        />
       </div>
       <div>
         <Label htmlFor="tipoResiduo">Tipo de Resíduo</Label>
-        <Input id="tipoResiduo" name="tipoResiduo" value={formData.tipoResiduo} onChange={(e) => handleInputChange('tipoResiduo', e.target.value)} />
+        <Input 
+          id="tipoResiduo" 
+          name="tipoResiduo" 
+          value={formData.tipoResiduo} 
+          onChange={(e) => handleInputChange('tipoResiduo', e.target.value)} 
+        />
       </div>
       <div>
         <Label htmlFor="descricao">Descrição</Label>
-        <Textarea id="descricao" name="descricao" value={formData.descricao} onChange={(e) => handleInputChange('descricao', e.target.value)} />
+        <Textarea 
+          id="descricao" 
+          name="descricao" 
+          value={formData.descricao} 
+          onChange={(e) => handleInputChange('descricao', e.target.value)} 
+        />
       </div>
       <div>
         <Label htmlFor="imagem">Imagem (opcional)</Label>
@@ -106,16 +138,38 @@ const Orcamentos = () => {
         />
       </div>
       <div className="flex items-center gap-2">
-        <Checkbox id="urgente" name="urgente" checked={formData.urgente} onCheckedChange={(v) => handleInputChange('urgente', v)} />
+        <Checkbox 
+          id="urgente" 
+          name="urgente" 
+          checked={formData.urgente} 
+          onCheckedChange={(v) => handleInputChange('urgente', v)} 
+        />
         <Label htmlFor="urgente">Urgente</Label>
+        {/* Campo hidden para enviar o valor do checkbox */}
+        <input type="hidden" name="urgente" value={formData.urgente ? 'Sim' : 'Não'} />
       </div>
       <div className="flex items-center gap-2">
-        <Checkbox id="acessoDificil" name="acessoDificil" checked={formData.acessoDificil} onCheckedChange={(v) => handleInputChange('acessoDificil', v)} />
+        <Checkbox 
+          id="acessoDificil" 
+          name="acessoDificil" 
+          checked={formData.acessoDificil} 
+          onCheckedChange={(v) => handleInputChange('acessoDificil', v)} 
+        />
         <Label htmlFor="acessoDificil">Acesso Difícil</Label>
+        {/* Campo hidden para enviar o valor do checkbox */}
+        <input type="hidden" name="acessoDificil" value={formData.acessoDificil ? 'Sim' : 'Não'} />
       </div>
       <div className="flex items-center gap-2">
-        <Checkbox id="termos" name="termos" required checked={formData.termos} onCheckedChange={(v) => handleInputChange('termos', v)} />
+        <Checkbox 
+          id="termos" 
+          name="termos" 
+          required 
+          checked={formData.termos} 
+          onCheckedChange={(v) => handleInputChange('termos', v)} 
+        />
         <Label htmlFor="termos">Aceito os termos</Label>
+        {/* Campo hidden para enviar o valor do checkbox */}
+        <input type="hidden" name="termos" value={formData.termos ? 'Sim' : 'Não'} />
       </div>
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Enviando...' : 'Enviar Orçamento'}
