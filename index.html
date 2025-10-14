@@ -1,10 +1,14 @@
 <!doctype html>
 <html lang="pt">
   <head>
-    <!-- ... outras meta tags ... -->
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CLYON - Recolha profissional de entulho e resíduos em Lisboa e Setúbal. Serviço rápido, seguro e sustentável." />
+    <meta name="keywords" content="recolha entulho, resíduos, Lisboa, Setúbal, limpeza, móveis velhos, lixo verde" />
     <title>CLYON</title>
 
-    <!-- SEU CÓDIGO DO IUBENDA - INÍCIO -->
+    <!-- Código do Iubenda - INÍCIO -->
     <script type="text/javascript">
     var _iub = _iub || [];
     _iub.csConfiguration = {"siteId":4278711,"cookiePolicyId":90537981,"lang":"pt","storage":{"useSiteId":true}};
@@ -12,16 +16,17 @@
     <script type="text/javascript" src="https://cs.iubenda.com/autoblocking/4278711.js"></script>
     <script type="text/javascript" src="//cdn.iubenda.com/cs/gpp/stub.js"></script>
     <script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>
-    <!-- SEU CÓDIGO DO IUBENDA - FIM -->
+    <!-- Código do Iubenda - FIM -->
 
-    <!-- CÓDIGO DA TAG DO GOOGLE - INÍCIO -->
+    <!-- Google tag (gtag.js ) - INÍCIO -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17651253265"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag( ){dataLayer.push(arguments);}
       gtag(\'js\', new Date());
 
-      // ESTA PARTE É CRÍTICA PARA O CONSENT MODE
+      // Configuração do Google Consent Mode - Definir o estado padrão ANTES do Iubenda atualizar
+      // Isso garante que o consentimento seja 'denied' por padrão até o usuário interagir com o Iubenda
       gtag(\'consent\', \'default\', {
         \'ad_storage\': \'denied\',
         \'analytics_storage\': \'denied\'
@@ -29,10 +34,11 @@
 
       gtag(\'config\', \'AW-17651253265\');
     </script>
-    <!-- CÓDIGO DA TAG DO GOOGLE - FIM -->
+    <!-- Google tag (gtag.js) - FIM -->
 
   </head>
   <body>
-    <!-- ... o resto do seu body ... -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
