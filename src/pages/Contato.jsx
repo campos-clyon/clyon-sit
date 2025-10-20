@@ -74,9 +74,9 @@ const Contato = () => {
     {
       icon: <Mail className="h-8 w-8 text-primary" />,
       titulo: "Email",
-      principal: "contato@clyon.pt",
+      principal: "wwcampss@gmail.com",
       secundario: "Resposta em até 2 horas",
-      link: "mailto:contato@clyon.pt",
+      link: "mailto:wwcampss@gmail.com",
       linkText: "Enviar Email"
     }
   ]
@@ -329,7 +329,7 @@ const Contato = () => {
                   
                   <div>
                     <p className="font-medium">Email:</p>
-                    <p className="text-sm text-gray-600">contato@clyon.pt</p>
+                    <p className="text-sm text-gray-600">wwcampss@gmail.com</p>
                   </div>
                   
                   <div>
