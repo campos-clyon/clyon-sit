@@ -28,7 +28,7 @@ const ComoFunciona = () => {
       detalhes: [
         "Telefone: +351 931 632 622",
         "WhatsApp disponível 24h",
-        "Email: acontato@clyon.pt",
+        "Email: wwcampss@gmail.com",
         "Formulário no site"
       ],
       tempo: "Imediato"
@@ -90,7 +90,7 @@ const ComoFunciona = () => {
     {
       icon: <Mail className="h-6 w-6 text-primary" />,
       titulo: "Email",
-      descricao: "acontato@clyon.pt",
+      descricao: "wwcampss@gmail.com",
       disponibilidade: "Resposta em até 2h"
     },
     {
