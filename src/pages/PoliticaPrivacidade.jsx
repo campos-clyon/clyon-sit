@@ -42,7 +42,7 @@ const PoliticaPrivacidade = () => {
                     <h2 className="text-2xl font-bold mb-4 clyon-primary-text">2. Responsável pelo Tratamento</h2>
                     <div className="bg-gray-50 p-4 rounded-lg">
                       <p className="font-semibold mb-2">CLYON</p>
-                      <p className="text-gray-700">Email: contato@clyon.pt</p>
+                      <p className="text-gray-700">Email: wwcampss@gmail.com</p>
                       <p className="text-gray-700">Telefone: +351 931 632 622</p>
                       <p className="text-gray-700">Área de atuação: Grande Lisboa e Setúbal</p>
                     </div>
@@ -230,7 +230,7 @@ const PoliticaPrivacidade = () => {
                           <Mail className="h-5 w-5 text-primary mr-3" />
                           <div>
                             <p className="font-semibold">Email</p>
-                            <p className="text-sm">contato@clyon.pt</p>
+                            <p className="text-sm">wwcampss@gmail.com</p>
                           </div>
                         </div>
                         
